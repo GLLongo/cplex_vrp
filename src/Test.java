@@ -9,5 +9,6 @@ public class Test {
         model.solve();
         model.printSolution();
 
+
     }
 }
