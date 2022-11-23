@@ -12,7 +12,7 @@ public class MyModel{
     private IloIntVar [][] z; //z[i][j] car j serves package i last - i.e edge from pkg i to dest j is used
     private IloIntVar [][] beta; //beta[i][j]  car i uses depot j - i.e edge from car i start to depot j is used
 
-    private IloIntVar [][] t; //order variable for MTZ constraint t[h][j]>=t[h][j] - B(1-x[h][i][j])
+    private IloIntVar [][] t; //order variable for MTZ constraint t[h][j]>=t[h][i] - B(1-x[h][i][j])
 
 
     //constants
@@ -154,6 +154,7 @@ public class MyModel{
     }
 
 
+    //Objective: minimize the total distance traveled by all the cars.
     private void addObjective() throws IloException {
 
         IloNumExpr obj = cplex.linearNumExpr();
@@ -298,7 +299,7 @@ public class MyModel{
         }
     }
 
-    // a car visits at least one depot when it enters a depot
+    // a car visits at least one depot when it delivers at least one package
     // ensure SUM beta[h][k] = 1 when car h is used
     private void addConstraint5() throws IloException {
         //a car is used when it visits at least one package
